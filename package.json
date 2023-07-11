@@ -1,0 +1,21 @@
+{
+  "name": "web-sandbox",
+  "version": "1.0.0",
+  "description": "Web development sandbox with live reload",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michel Ocon",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/preset-env": "^7.22.7",
+    "browser-sync": "^2.29.3",
+    "del": "^6.1.1",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-sass": "^5.1.0",
+    "sass": "^1.63.6"
+  }
+}
