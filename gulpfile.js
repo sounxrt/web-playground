@@ -4,12 +4,15 @@ const browserSync = require('browser-sync').create();
 const del = require('del');
 const sass = require('gulp-sass')(require('sass'));
 
+const compiler = require('webpack');
+const webpack = require('webpack-stream');
+
 function startServer() {
   browserSync.init({
     server: './app'
   });
 
-  watch('src/assets/js/**/*.js', series(compileJs, reload));
+  watch('src/assets/js/**/*.js', series(compileWebpack, reload));
   watch('src/assets/scss/**/*.scss', compileSass);
   watch('src/assets/images/**/*', series(copyImages, reload));
   watch('src/html/**/*.html').on('change', series(copyHtml, reload));
@@ -24,6 +27,16 @@ function compileSass() {
     .pipe(sass())
     .pipe(dest('app/assets/css'))
     .pipe(browserSync.stream());
+}
+
+function compileWebpack() {
+  return src('src/assets/js/index.js')
+    .pipe(webpack(require('./webpack.config.js'), compiler, function (err, stats) {
+    }))
+    .pipe(babel({
+      presets: ['@babel/preset-env']
+    }))
+    .pipe(dest('app/assets/js/'));
 }
 
 function compileJs() {
@@ -54,4 +67,5 @@ function reload(cb) {
   cb();
 }
 
-exports.default = series(clearDir, copyHtml, copyVendor, copyImages, compileSass, compileJs, startServer);
+exports.compileWebpack = compileWebpack;
+exports.default = series(clearDir, copyHtml, copyVendor, copyImages, compileSass, compileWebpack, startServer);
