@@ -33,9 +33,9 @@ function compileWebpack() {
   return src('src/assets/js/index.js')
     .pipe(webpack(require('./webpack.config.js'), compiler, function (err, stats) {
     }))
-    .pipe(babel({
-      presets: ['@babel/preset-env']
-    }))
+    // .pipe(babel({
+    //   presets: ['@babel/preset-env']
+    // }))
     .pipe(dest('app/assets/js/'));
 }
 
