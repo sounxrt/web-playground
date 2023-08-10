@@ -9,7 +9,8 @@ const webpack = require('webpack-stream');
 
 function startServer() {
   browserSync.init({
-    server: './app'
+    server: './app',
+    open: false
   });
 
   watch('src/assets/js/**/*.js', series(compileWebpack, reload));
