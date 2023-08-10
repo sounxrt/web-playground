@@ -33,9 +33,6 @@ function compileWebpack() {
   return src('src/assets/js/index.js')
     .pipe(webpack(require('./webpack.config.js'), compiler, function (err, stats) {
     }))
-    // .pipe(babel({
-    //   presets: ['@babel/preset-env']
-    // }))
     .pipe(dest('app/assets/js/'));
 }
 
@@ -57,15 +54,10 @@ function copyHtml() {
     .pipe(dest('app'));
 }
 
-function copyVendor() {
-  return src('src/assets/vendor/**/*')
-    .pipe(dest('app/assets/vendor'))
-}
-
 function reload(cb) {
   browserSync.reload();
   cb();
 }
 
 exports.compileWebpack = compileWebpack;
-exports.default = series(clearDir, copyHtml, copyVendor, copyImages, compileSass, compileWebpack, startServer);
+exports.default = series(clearDir, copyHtml, copyImages, compileSass, compileWebpack, startServer);
